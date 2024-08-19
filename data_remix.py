@@ -1,4 +1,3 @@
-from sklearn.model_selection import train_test_split
 import pandas as pd
 import os
 import librosa
@@ -50,17 +49,17 @@ def getAudio(path, audio_list, df, country):
 getAudio(us_path, us_audios, us, 0)
 getAudio(uk_path, uk_audios, uk, 1)
 getAudio(au_path, au_audios, au, 2)
-print(us.head())
+
 #shuffle each dataframe 
 us = us.sample(frac=1).reset_index(drop=True)
 uk = uk.sample(frac=1).reset_index(drop=True)
 au = au.sample(frac=1).reset_index(drop=True)
-print(us.head())
+
 #seperate into 60% train 10% validation and 30% test
 us_train = us.iloc[0:387]
 us_val = us.iloc[387:452]
 us_test = us.iloc[452:646]
-print(us_train.head())
+
 uk_train = uk.iloc[0:200]
 uk_val = uk.iloc[200:233]
 uk_test = uk.iloc[233:333]
@@ -71,13 +70,10 @@ au_test = au.iloc[534:764]
 
 #combine train, validation and test into respective dataframes
 train = pd.concat([us_train, uk_train, au_train])
-print(train.head())
-print(train.iloc[0,0][0])
-print(type(train.iloc[0,0][0]))
 val = pd.concat([us_val, uk_val, au_val])
 test = pd.concat([us_test, uk_test, au_test])
 
-#write to csv files
-test.to_csv('test.csv', index=False)
-val.to_csv('val.csv', index=False)
-train.to_csv('train.csv', index=False)
+#write to feather files
+test.to_feather('test.feather')
+val.to_feather('val.feather')
+train.to_feather('train.feather')

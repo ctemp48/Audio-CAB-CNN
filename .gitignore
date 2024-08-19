@@ -1,6 +1,6 @@
 audio/
 venv/
 data_check.py
-test.csv
-train.csv
-val.csv
+test.feather
+train.feather
+val.feather
