@@ -21,12 +21,12 @@ au_audios = os.listdir(au_path)
 
 def getAudio(path, audio_list, df, country):
     """
-    load in each audio file, normalize it and then divide into
+    load in each audio file, truncate to 10 seconds, normalize it and then divide into
     4000 sub intervals for each second of audio. take the max from
     each subinterval to use as the input data.
     """
     for file in audio_list:
-        audio, sr = librosa.load(os.path.join(path, file), sr=None)
+        audio, sr = librosa.load(os.path.join(path, file), sr=None, duration=10.0)
         length = librosa.get_duration(y=audio, sr=sr)
         mean = np.mean(audio)
         std_dev = np.std(audio)
